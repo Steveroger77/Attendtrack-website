@@ -23,8 +23,9 @@ html, body {
 /* Liquid Glass CSS Implementation */
 .liquid-glass {
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  /* Removed backdrop-filter to eliminate GPU jitter over video */
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(2px) saturate(110%);
+  -webkit-backdrop-filter: blur(2px) saturate(110%);
   border-radius: 24px;
   box-shadow: 
     0 4px 24px rgba(0, 0, 0, 0.15),
@@ -76,8 +77,9 @@ html, body {
 
 .liquid-glass-strong {
   position: relative;
-  background: rgba(255, 255, 255, 0.07);
-  /* Removed backdrop-filter to eliminate GPU jitter over video */
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(2px) saturate(110%);
+  -webkit-backdrop-filter: blur(2px) saturate(110%);
   border-radius: 28px;
   box-shadow: 
     0 6px 30px rgba(0, 0, 0, 0.2),
@@ -137,8 +139,9 @@ html, body {
   gap: 8px;
   padding: 9px 20px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.06);
-  /* Removed backdrop-filter to eliminate GPU jitter over video */
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(2px) saturate(100%);
+  -webkit-backdrop-filter: blur(2px) saturate(100%);
   border: none;
   color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
@@ -330,8 +333,9 @@ html, body {
   padding: 10px 22px 12px;
   border-radius: 50px;
 
-  background: rgba(255, 255, 255, 0.08);
-  /* Removed backdrop-filter to eliminate GPU jitter over video */
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(2px) saturate(100%);
+  -webkit-backdrop-filter: blur(2px) saturate(100%);
   border: none;
   box-shadow: 
     0 4px 24px rgba(0, 0, 0, 0.25),

@@ -11,7 +11,6 @@ import {
   useSpring,
   useTransform
 } from "motion/react";
-import Lenis from "lenis";
 
 // ─── SECTION 3: PORTAL VIDEO SECTION ────────────────────────────────────────
 // Three lines — all same size, scroll-driven animation
@@ -371,35 +370,6 @@ export default function App() {
   const [framesReady, setFramesReady] = useState(false);
   const [canvasVisible, setCanvasVisible] = useState(true);
   const progressBarRef = useRef<HTMLDivElement>(null);
-  const lenisRef = useRef<Lenis | null>(null);
-
-  // ─── LENIS SMOOTH SCROLLING ──────────────────────────────────────────────────
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-    lenisRef.current = lenis;
-
-    // Run a temporary loop just for Lenis until startTick takes over
-    let tempRafId: number;
-    function tempRaf(time: number) {
-      if (!isLoadedRef.current) {
-        lenis.raf(time);
-        tempRafId = requestAnimationFrame(tempRaf);
-      }
-    }
-    tempRafId = requestAnimationFrame(tempRaf);
-
-    return () => {
-      cancelAnimationFrame(tempRafId);
-      lenis.destroy();
-    };
-  }, []);
 
   const currentProgressRef = useRef(0);
   const fadeOpacityRef = useRef(0);
@@ -570,7 +540,7 @@ export default function App() {
 
   // ─── RAF TICK — drives both fade-in and scroll tracking ──────────────────────
   const startTick = useCallback(() => {
-    const tick = (time: number) => {
+    const tick = () => {
       // 1. Initial fade-in overlay
       if (canvasVisibleRef.current && fadeOpacityRef.current < 1) {
         fadeOpacityRef.current += 0.05;
@@ -592,11 +562,6 @@ export default function App() {
             }
           }
         }
-      }
-      
-      // Sync Lenis before reading scrollY to guarantee 100% sync
-      if (lenisRef.current) {
-        lenisRef.current.raf(time);
       }
       
       // 2. High-performance scroll tracking (runs on compositor frame)
