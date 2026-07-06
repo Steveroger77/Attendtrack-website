@@ -1,0 +1,6 @@
+{
+  "name": "Attend Track Feature Showcase",
+  "description": "A premium, pixel-perfect single-page showcase of Attend Track features, utilizing highly polished liquid glass components floating in a deep dark void.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

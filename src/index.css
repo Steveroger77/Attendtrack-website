@@ -1,0 +1,415 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+html {
+  /* Dark background on html itself — any overscroll gap shows dark, not the fixed video */
+  background-color: #050508;
+  overscroll-behavior-y: none;
+}
+
+html, body {
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Liquid Glass CSS Implementation */
+.liquid-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(2px) saturate(110%);
+  -webkit-backdrop-filter: blur(2px) saturate(110%);
+  border-radius: 24px;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.15),
+    0 20px 40px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.01),
+    inset 0 10px 20px rgba(255, 255, 255, 0.01);
+  overflow: hidden;
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px; /* Thinner physical glass border */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hover effects for premium feeling */
+.liquid-glass:hover {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 32px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),
+    inset 0 12px 24px rgba(255, 255, 255, 0.03);
+}
+
+.liquid-glass-strong {
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(2px) saturate(110%);
+  -webkit-backdrop-filter: blur(2px) saturate(110%);
+  border-radius: 28px;
+  box-shadow: 
+    0 6px 30px rgba(0, 0, 0, 0.2),
+    0 30px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1.5px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.01),
+    inset 0 12px 24px rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.liquid-glass-strong::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.08) 35%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.04) 65%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.liquid-glass-strong:hover {
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    inset 0 1.5px 0 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.04),
+    inset 0 14px 28px rgba(255, 255, 255, 0.04);
+}
+
+.bg-radial-glow {
+  background-image: radial-gradient(circle at 50% 0%, #0a0a0f 0%, #000000 70%);
+}
+
+/* Glassmorphic buttons for GitHub / Live (perfect match to liquid-glass) */
+.nav-glass-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(2px) saturate(100%);
+  -webkit-backdrop-filter: blur(2px) saturate(100%);
+  border: none;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.25),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
+    inset 0 10px 20px rgba(255, 255, 255, 0.02);
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+}
+
+.nav-glass-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  padding: 1.2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.nav-glass-btn:hover {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 32px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),
+    inset 0 12px 24px rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+/* ── SECTION 3: PORTAL VIDEO ─────────────────────────────────────────────── */
+
+/* The wrapper div in JSX already has background: #050508.
+   This is a belt-and-suspenders layer inside the section itself. */
+.portal-section {
+  position: relative;
+  width: 100%;
+  /* Exact 100dvh — no overscroll gap at bottom on mobile */
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #050508;
+  isolation: isolate;
+  z-index: 50;
+}
+
+/* Layer 0 — opaque solid fill, painted first, blocks everything beneath */
+.portal-bg-block {
+  position: absolute;
+  inset: 0;
+  background: #050508;
+  z-index: 0;
+}
+
+.portal-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Subtle dark vignette overlay */
+.portal-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 8, 0.35) 0%,
+    rgba(5, 5, 8, 0.0) 25%,
+    rgba(5, 5, 8, 0.0) 75%,
+    rgba(5, 5, 8, 0.3) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Top fade — blends from the dark section 2 background smoothly */
+.portal-top-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, #050508 0%, transparent 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Header: "Welcome / to the / new age" ───────────────────────────────── */
+/* Professional stacked display text — all three lines identical weight & size.
+   Apple / Linear / Vercel style: massive bold type, tight leading, left-anchored.
+   JS drives opacity & transform (scroll-driven). No CSS transition here.         */
+.portal-header {
+  position: absolute;
+  top: clamp(24px, 4vh, 48px);
+  left: clamp(32px, 5.5vw, 80px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  pointer-events: none;
+}
+
+.portal-header-word {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3.4rem, 7vw, 7rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  text-shadow:
+    0 2px 48px rgba(0, 0, 0, 0.95),
+    0 0 80px rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  display: block;
+  cursor: default;
+}
+
+/* Container that identically mimics object-fit: cover scaling for a 16:9 video.
+   This guarantees the Teleport button stays perfectly anchored to the portal's center
+   regardless of screen resolution or aspect ratio cropping. */
+.tracking-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100dvh;
+  min-width: 177.77dvh;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* ── Portal circle container — anchors the Teleport button to the portal ── */
+.portal-circle {
+  position: absolute;
+  /* Exact intrinsic coordinates of the portal in the 16:9 video */
+  top: 52.5%;
+  left: 66%;
+  /* Size of the glowing portal ring — matches the visual circle in the video */
+  width: clamp(200px, 28vw, 360px);
+  height: clamp(200px, 28vw, 360px);
+  /* Center the container itself on the portal's geometric center */
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ── Teleport card — perfectly centered inside .portal-circle ── */
+/* top:50% left:50% + translate(-50%,-50%) pins the button's CENTER point
+   to the container's CENTER point. Scroll animation adds translateY on top. */
+.portal-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Default resting state — JS will override on scroll but always keeps
+     translate(-50%,-50%) as the base so center-alignment is preserved. */
+  transform: translate(-50%, -50%);
+  z-index: 7;
+  pointer-events: auto;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 22px 12px;
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(2px) saturate(100%);
+  -webkit-backdrop-filter: blur(2px) saturate(100%);
+  border: none;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.25),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.02),
+    inset 0 10px 20px rgba(255, 255, 255, 0.02);
+
+  cursor: pointer;
+  text-decoration: none;
+  color: #ffffff;
+  /* Start invisible — JS animates in on scroll */
+  opacity: 0;
+  /* Only transition hover properties; opacity/transform are JS-driven */
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portal-card:hover {
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 32px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.03),
+    inset 0 12px 24px rgba(255, 255, 255, 0.03);
+  animation: portalPulse 1.6s ease-out infinite;
+}
+
+/* Glassy border shimmer */
+.portal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  padding: 1.2px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.portal-card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1;
+}
+
+.portal-card-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.82rem, 1.3vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+/* Pulse ring on hover */
+@keyframes portalPulse {
+  0%   { box-shadow: 0 6px 28px rgba(0,0,0,0.55), 0 0 0 0   rgba(255,255,255,0.2); }
+  70%  { box-shadow: 0 6px 28px rgba(0,0,0,0.55), 0 0 0 18px rgba(255,255,255,0);   }
+  100% { box-shadow: 0 6px 28px rgba(0,0,0,0.55), 0 0 0 0   rgba(255,255,255,0);   }
+}
+
+
