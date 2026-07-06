@@ -469,29 +469,64 @@ export default function App() {
       if (progressBarRef.current) {
         progressBarRef.current.style.transform = `scaleX(${p})`;
       }
-      drawLoadingScreen(p);
-      if (loaded === TOTAL_FRAMES) {
+      
+      // Start the app immediately as soon as the first frame is ready
+      if (idx === 0 && !isLoadedRef.current) {
         isLoadedRef.current = true;
         setFramesReady(true);
         drawFrame(currentProgressRef.current);
         startTick();
       }
+
+      if (!isLoadedRef.current) {
+        drawLoadingScreen(p);
+      }
     };
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      const num = String(i).padStart(5, "0");
-      img.src = `/frames/frames${num}.jpg`;
-      const idx = i - 1;
-      img.onload = () => {
-        if (typeof img.decode === "function") {
-          img.decode().then(() => onFrameReady(img, idx)).catch(() => onFrameReady(img, idx));
-        } else {
-          onFrameReady(img, idx);
-        }
-      };
-      img.onerror = () => { loaded++; if (loaded === TOTAL_FRAMES) { isLoadedRef.current = true; setFramesReady(true); startTick(); } };
-    }
+    // 1. Prioritize the first frame so the user sees the site instantly
+    const firstImg = new Image();
+    firstImg.src = `/frames/frames00001.jpg`;
+    
+    const loadRestOfFrames = () => {
+      // 2. Load the remaining frames in the background
+      for (let i = 2; i <= TOTAL_FRAMES; i++) {
+        const img = new Image();
+        const num = String(i).padStart(5, "0");
+        img.src = `/frames/frames${num}.jpg`;
+        const idx = i - 1;
+        img.onload = () => {
+          if (typeof img.decode === "function") {
+            img.decode().then(() => onFrameReady(img, idx)).catch(() => onFrameReady(img, idx));
+          } else {
+            onFrameReady(img, idx);
+          }
+        };
+        img.onerror = () => { loaded++; };
+      }
+    };
+
+    firstImg.onload = () => {
+      if (typeof firstImg.decode === "function") {
+        firstImg.decode()
+          .then(() => onFrameReady(firstImg, 0))
+          .catch(() => onFrameReady(firstImg, 0))
+          .finally(loadRestOfFrames);
+      } else {
+        onFrameReady(firstImg, 0);
+        loadRestOfFrames();
+      }
+    };
+    
+    firstImg.onerror = () => {
+      // Fallback if the first frame fails, unblock the app anyway
+      loaded++;
+      if (!isLoadedRef.current) {
+        isLoadedRef.current = true;
+        setFramesReady(true);
+        startTick();
+      }
+      loadRestOfFrames();
+    };
   }, [drawFrame, drawLoadingScreen]);
 
   const canvasVisibleRef = useRef(true);
