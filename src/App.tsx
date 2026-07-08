@@ -495,26 +495,15 @@ export default function App() {
         img.src = `/frames/frames${num}.jpg`;
         const idx = i - 1;
         img.onload = () => {
-          if (typeof img.decode === "function") {
-            img.decode().then(() => onFrameReady(img, idx)).catch(() => onFrameReady(img, idx));
-          } else {
-            onFrameReady(img, idx);
-          }
+          onFrameReady(img, idx);
         };
         img.onerror = () => { loaded++; };
       }
     };
 
     firstImg.onload = () => {
-      if (typeof firstImg.decode === "function") {
-        firstImg.decode()
-          .then(() => onFrameReady(firstImg, 0))
-          .catch(() => onFrameReady(firstImg, 0))
-          .finally(loadRestOfFrames);
-      } else {
-        onFrameReady(firstImg, 0);
-        loadRestOfFrames();
-      }
+      onFrameReady(firstImg, 0);
+      loadRestOfFrames();
     };
     
     firstImg.onerror = () => {
