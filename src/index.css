@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 html {
   /* Dark background on html itself — any overscroll gap shows dark, not the fixed video */
